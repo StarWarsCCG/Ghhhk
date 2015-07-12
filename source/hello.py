@@ -29,17 +29,26 @@ def card(card):
 
 @app.route("/api/cards/search")
 def search_by_title():
-	# /api/cards/search_by_title
-	# POST data -> 'title_search'
-	# return a JSON doc of IDs and full card titles
 	param = request.args.get('title')
 	if param == None or param == "":
 		return Response(json.dumps({}),  mimetype='application/json')
-
 	search_string = '%' + param + '%'
-	conn = psycopg2.connect("host=localhost dbname=swccg user=postgres password=guest222")
+	conn = psycopg2.connect("host=localhost dbname=swccg user=postgres password=guest")
 	cur = conn.cursor()
-	cur.execute("select id, card_name from cards where card_name ILIKE (%s)", (search_string,))
+
+	query = "select id, card_name from cards where card_name ILIKE (%s)"
+	param = (search_string,)
+
+	limit = request.args.get('limit')
+	if limit is not None:
+		try:
+			val = int(limit)
+		except ValueError:
+			pass
+		else:
+			query += " limit (%s)"
+			param = (search_string, limit)
+	cur.execute(query, param)
 	r = cur.fetchall()
 
 	data = {}
@@ -50,6 +59,7 @@ def search_by_title():
 	cur.close()
 	conn.close()
 	
+	#set content-type to application/json, rather than text/html
 	return Response(output,  mimetype='application/json')
 
 if __name__ == "__main__":
