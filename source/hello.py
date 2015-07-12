@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, Response, json
 from flask import request
 import psycopg2
 import json
@@ -32,7 +32,11 @@ def search_by_title():
 	# /api/cards/search_by_title
 	# POST data -> 'title_search'
 	# return a JSON doc of IDs and full card titles
-	search_string = '%' + request.args.get('title') + '%'
+	param = request.args.get('title')
+	if param == None or param == "":
+		return Response(json.dumps({}),  mimetype='application/json')
+
+	search_string = '%' + param + '%'
 	conn = psycopg2.connect("host=localhost dbname=swccg user=postgres password=guest222")
 	cur = conn.cursor()
 	cur.execute("select id, card_name from cards where card_name ILIKE (%s)", (search_string,))
