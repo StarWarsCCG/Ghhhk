@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import request
 import psycopg2
 import json
 
@@ -24,14 +25,14 @@ def card(card):
 	if r == None:
 		return "No card found with that ID"
 	else:
-		return "<h2>The card name is {}".format(r[0]) + "</h2><img src=\"/static/images/c" + card + ".gif\">"
+		return "<h2>{}".format(r[0]) + "</h2><img src=\"/static/images/c" + card + ".gif\">"
 
-@app.route("/api/cards/search_by_title", methods=['POST'])
-def search_by_title(search_string):	
+@app.route("/api/cards/search")
+def search_by_title():
 	# /api/cards/search_by_title
 	# POST data -> 'title_search'
 	# return a JSON doc of IDs and full card titles
-	search_string = '%' + search_string + '%'
+	search_string = '%' + request.args.get('title') + '%'
 	conn = psycopg2.connect("host=localhost dbname=swccg user=postgres password=guest222")
 	cur = conn.cursor()
 	cur.execute("select id, card_name from cards where card_name ILIKE (%s)", (search_string,))
