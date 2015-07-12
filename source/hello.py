@@ -23,7 +23,7 @@ def card(card):
 	if r == None:
 		return "No card found with that ID"
 	else:
-		return "<h2>The card name is {}".format(r[0]) + "</h2><img src=\"/static/c" + card + ".gif\">"
+		return "<h2>The card name is {}".format(r[0]) + "</h2><img src=\"/static/images/c" + card + ".gif\">"
 
 if __name__ == "__main__":
 	app.run(debug=True)
