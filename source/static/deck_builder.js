@@ -5,11 +5,10 @@ $(document).ready(function() {
             "fake_search2.json",
             null,
             function(json) {
-                var result = "";
+                $('#card-search-results').empty();
                 
                 for (var key in json) {
                     if (json.hasOwnProperty(key)) {
-                        result += key + " -> " + json[key] + "\n";
                         $('#card-search-results:last-child').append(
                             '<tr><td>' + key + '</td><td>' + json[key] + '</td></tr>');
                     }
