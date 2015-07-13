@@ -1,7 +1,7 @@
 function doSearch() {
     $.getJSON(
-        "/api/cards/search?title=" + $("#card-title-search").val(),
-        null,
+        "/api/cards/search",
+        {"title":$("#card-title-search").val()},
         function(json) {
             $('#card-search-results').empty();
             
