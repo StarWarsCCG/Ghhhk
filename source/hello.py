@@ -9,35 +9,62 @@ app = Flask(__name__)
 def hello():
 	return "Hello World!"
 
-@app.route("/card/<card>")
+@app.route('/card/<card>')
 def card(card):
 	try:
 		val = int(card)
 	except ValueError:
-		return "Error, invalid card number"
-	conn = psycopg2.connect("host=localhost dbname=swccg user=postgres password=guest222")
+		return 'Error, invalid card number'
+	conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
 	cur = conn.cursor()
-	cur.execute("select card_name from cards where id = (%s)", (card,))
+	cur.execute('select card_name from cards where id = (%s)', (card,))
 	r = cur.fetchone()
 	cur.close()
 	conn.close()
 
 	if r == None:
-		return "No card found with that ID"
+		return 'No card found with that ID'
 	else:
-		return "<h2>{}".format(r[0]) + "</h2><img src=\"/static/images/c" + card + ".gif\">"
+		return '<h2>{}'.format(r[0]) + '</h2><img src=\"/static/images/c' + card + '.gif\">'
 
-@app.route("/api/cards/search")
+@app.route('/api/cards/search')
 def search_by_title():
 	param = request.args.get('title')
-	if param == None or param == "":
+	# if param == None or param == '':
+	if param == None:
 		return Response(json.dumps({}),  mimetype='application/json')
 	search_string = '%' + param + '%'
-	conn = psycopg2.connect("host=localhost dbname=swccg user=postgres password=guest")
+	conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
 	cur = conn.cursor()
 
-	query = "select id, card_name from cards where card_name ILIKE (%s)"
+	query = 'select id, card_name from cards where card_name ILIKE (%s)'
 	param = (search_string,)
+
+	cardtype = request.args.get('cardtype')
+	if cardtype is not None:
+		cardtype = '%' + cardtype + '%'
+		query += ' and card_type ILIKE (%s)'
+		param += (cardtype,)
+
+	matching_weapon = request.args.get('match')
+	if matching_weapon is not None:
+		if matching_weapon == 'yes':
+			query += ' and matching_weapon IS NOT NULL'
+		elif matching_weapon == 'no':
+			query += ' and matching_weapon IS NULL'
+		else:
+			pass
+
+	grouping = request.args.get('grouping')
+	if grouping is not None:
+		if grouping == 'light':
+			query += ' and grouping = (%s)'
+			param += ("Light",)
+		elif grouping == 'dark':
+			query += ' and grouping = (%s)'
+			param += ("Dark",)
+		else:
+			pass
 
 	limit = request.args.get('limit')
 	if limit is not None:
@@ -46,8 +73,9 @@ def search_by_title():
 		except ValueError:
 			pass
 		else:
-			query += " limit (%s)"
-			param = (search_string, limit)
+			query += ' limit (%s)'
+			param += (limit,)
+
 	cur.execute(query, param)
 	r = cur.fetchall()
 
