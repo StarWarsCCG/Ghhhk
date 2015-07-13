@@ -2,7 +2,7 @@ $(document).ready(function() {
     $("#card-title-search-button").click(function(e) {
         e.preventDefault();
         $.getJSON(
-            "fake_search2.json",
+            "/api/cards/search?title=" + $("#card-title-search").val(),
             null,
             function(json) {
                 $('#card-search-results').empty();
