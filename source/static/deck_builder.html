@@ -3,6 +3,7 @@
   <head>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="deck_builder.css" rel="stylesheet">
     
     <title>Deck Builder - DEJARIX</title>
   </head>
@@ -13,18 +14,37 @@
       <p>
         <label for="card-title-search">Card Title</label>
         <input id="card-title-search" type="text">
-        <button id="card-title-search-button" type="button" class="btn btn-xs btn-primary">Search</button>
+        <button id="card-title-search-button" type="button" class="btn btn-xs btn-default">Search</button>
       </p>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-          </tr>
-        </thead>
-        <tbody id="card-search-results">
-        </tbody>
-      </table>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+              </tr>
+            </thead>
+            <tbody id="card-search-results">
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Deck Count</th>
+                <th><abbr title="Placed under Starting Effect">Start Count</span></th>
+              </tr>
+            </thead>
+            <tbody id="asdf">
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   
     <script src="js/jquery-2.1.4.min.js"></script>
