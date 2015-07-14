@@ -8,7 +8,7 @@ function doSearch() {
             for (var key in json) {
                 if (json.hasOwnProperty(key)) {
                     $('#card-search-results:last-child').append(
-                        '<tr><td>' + key + '</td><td>' + json[key] + '</td></tr>');
+                        '<tr><td>' + key + '</td><td>' + json[key] + '</td><td></td></tr>');
                 }
             }
         });

@@ -1,5 +1,5 @@
-#card-search-results tr:hover
+#card-search-results tr td:last-child
 {
-    background-color: #00cc66;
+    text-align: right;
 }
 
