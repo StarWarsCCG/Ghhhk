@@ -3,28 +3,28 @@
   <head>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/static/css/dejarix.css" rel="stylesheet">
     
     <title>DEJARIX</title>
   </head>
-  <body>
+  <body role="document">
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">DEJARIX</a>
+          <a class="navbar-brand" href="/">DEJARIX</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Dash</a></li>
-            <li><a href="#about">Cards</a></li>
+            <li><a href="/cards">Cards</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Decks <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Browse Public Decks</a></li>
-                <li><a href="#">View My Decks</a></li>
+                <li><a href="/decks">Browse Public Decks</a></li>
+                <li><a href="/decks/mine">View My Decks</a></li>
                 <li role="separator" class="divider"></li>
                 <li class="dropdown-header">Create New Deck</li>
-                <li><a href="#">Dark Side</a></li>
-                <li><a href="#">Light Side</a></li>
+                <li><a href="/decks/new/dark">Dark Side</a></li>
+                <li><a href="/decks/new/light">Light Side</a></li>
               </ul>
             </li>
           </ul>
@@ -32,7 +32,7 @@
       </div>
     </nav>
     
-    <div class="container">
+    <div class="container" role="main">
         <p>{{ stuff }}</p>
     </div>
     
