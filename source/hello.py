@@ -54,23 +54,25 @@ def test_template():
 	template = env.get_template('test.html')
 	return template.render(user='LordBuzzSaw')
 
-@app.route('/card/<card>')
-def card(card):
+@app.route('/card/<card_id>')
+def card(card_id):
 	try:
-		val = int(card)
+		val = int(card_id)
 	except ValueError:
 		return 'Error: invalid card number'
 	conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
 	cur = conn.cursor()
-	cur.execute('select card_name from cards where id = (%s)', (card,))
+	cur.execute('select card_name from cards where id = (%s)', (card_id,))
 	r = cur.fetchone()
 	cur.close()
 	conn.close()
 
 	if r == None:
-		return 'No card found with that ID'
+		template = env.get_template('404.html')
+		return template.render(''), 404
 	else:
-		return template.render(stuff='<h2>{}'.format(r[0]) + '</h2><img src=\"/static/images/c' + card + '.gif\">')
+		template = env.get_template('card.html')
+		return template.render(name=r[0], card_id=card_id)
 
 @app.route('/deck/<deck_id>')
 def deck(deck_id):
