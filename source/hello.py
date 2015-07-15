@@ -1,14 +1,42 @@
 from flask import Flask, Response, json, request, make_response, redirect, render_template
 from jinja2 import Environment, PackageLoader
 import psycopg2
+import datetime
 import json
 
 app = Flask(__name__)
 env = Environment(loader=PackageLoader(__name__, 'templates'))
 
+template = env.get_template('standard.html')
+
+def get_a_deck(deck_id):
+	conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
+	cur = conn.cursor()
+	cur.execute('select id, name, date_created, is_light_side, description, date_modified, strategy, player_id, is_public from decks where id = (%s)', (deck_id,))
+	r = cur.fetchone()
+	cur.close()
+	conn.close()
+
+	# s = r[2].strftime('%B %-d, %Y @ %H:%M')
+
+	data = {
+		"id": int(r[0])
+		,"name": str(r[1])
+		,"date_created": r[2]
+		,"is_light_side": r[3]
+		,"description": str(r[4])
+		,"date_modified": r[5]
+		,"strategy": str(r[6])
+		,"player_id": r[7]
+		,"is_public": r[8]
+	}
+	
+	return data
+
+
+
 @app.route("/")
 def hello():
-	template = env.get_template('standard.html')
 	return template.render(stuff='Hello World!')
 
 @app.route('/decks/new/dark')
@@ -26,7 +54,7 @@ def card(card):
 	try:
 		val = int(card)
 	except ValueError:
-		return 'Error, invalid card number'
+		return 'Error: invalid card number'
 	conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
 	cur = conn.cursor()
 	cur.execute('select card_name from cards where id = (%s)', (card,))
@@ -37,10 +65,69 @@ def card(card):
 	if r == None:
 		return 'No card found with that ID'
 	else:
-		return '<h2>{}'.format(r[0]) + '</h2><img src=\"/static/images/c' + card + '.gif\">'
+		return template.render(stuff='<h2>{}'.format(r[0]) + '</h2><img src=\"/static/images/c' + card + '.gif\">')
+
+@app.route('/deck/<deck_id>')
+def deck(deck_id):
+	try:
+		val = int(deck_id)
+	except ValueError:
+		return 'Error: invalid deck number'
+	if deck_id is not None:
+		try:
+			val = int(deck_id)
+		except ValueError:
+			return 'Error: invalid deck number'
+		else:
+			deck = get_a_deck(deck_id)
+
+
+			html =  'Deck ID: {}'.format(deck["id"]) + '<br />'
+			html += 'Deck Name: {}'.format(deck["name"]) + '<br />'
+			html += 'Created: {}'.format(deck["date_created"].strftime('%B %-d, %Y @ %H:%M')) + '<br />'
+			if deck["is_light_side"] is True:
+				html += 'Side: Light <br />'
+			else:
+				html += 'Side: Dark <br />'
+			html += 'Description: {}'.format(deck["description"]) + '<br />'
+			html += 'Last Modified: {}'.format(deck["date_modified"].strftime('%B %-d, %Y @ %H:%M')) + '<br />'
+			html += 'Strategy: {}'.format(deck["strategy"]) + '<br />'
+			html += 'Player ID: {}'.format(deck["player_id"]) + '<br />'
+			if deck["is_public"] is True:
+				html += 'Deck Status: Public <br />'
+			else:
+				html += 'Deck Status: Private <br />'
+
+			return template.render(stuff=html)
+
+
+@app.route('/api/deck')
+def api_deck_get():
+	# deck_id = request.args.get('id')
+	# try:
+	# 	val = int(deck_id)
+	# except ValueError:
+	# 	return 'Error: invalid deck number'
+	# if deck_id is not None:
+	# 	try:
+	# 		val = int(deck_id)
+	# 	except ValueError:
+	# 		return 'Error: invalid deck number'
+	# 	else:
+	# 		conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
+	# 		cur = conn.cursor()
+
+	# 		cur.execute('select id, name, date_created, is_light_side, description, date_modified, strategy, player_id, is_public from decks where id = (%s)', (deck_id,))
+	# 		r = cur.fetchall()
+			
+	# 		cur.close()
+	# 		conn.close()
+
+	return 'yay'
+	# return '{}'.format(r)
 
 @app.route('/api/cards/search')
-def search_by_title():
+def api_cards_search():
 	args = request.args
 	# if param == None or param == '':
 	conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
@@ -93,6 +180,7 @@ def search_by_title():
 	else:
 		return Response(json.dumps({}),  mimetype='application/json')
 
+
 	limit = request.args.get('limit')
 	if limit is not None:
 		try:
@@ -133,11 +221,12 @@ def set_snickerdoodle_custom(snicker):
 
 @app.route('/snickerdoodle/get')
 def get_snickerdoodle():
+
 	snicker = request.cookies.get('snicker')
 	if snicker is None:
 		return '<h4>Something is broken.</h4>'
 	else:
-		return 'This doodle\'s snicker is {}'.format(snicker)
+		return '<h4>This doodle\'s snicker is {}.</h4>'.format(snicker)
 
 
 if __name__ == "__main__":
