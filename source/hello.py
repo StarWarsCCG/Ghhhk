@@ -8,7 +8,7 @@ env = Environment(loader=PackageLoader(__name__, 'templates'))
 
 @app.route("/")
 def hello():
-	template = env.get_template('test.html')
+	template = env.get_template('standard.html')
 	return template.render(stuff='Hello World!')
 
 @app.route('/card/<card>')

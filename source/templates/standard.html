@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+    
+    <title>DEJARIX</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">DEJARIX</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Dash</a></li>
+            <li><a href="#about">Cards</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Decks <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Public Decks</a></li>
+                <li><a href="#">Your Decks</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Create New Deck</li>
+                <li><a href="#">Dark Side</a></li>
+                <li><a href="#">Light Side</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="container">
+        <p>{{ stuff }}</p>
+    </div>
+    
+    <script src="/static/js/jquery-2.1.4.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+</html>
