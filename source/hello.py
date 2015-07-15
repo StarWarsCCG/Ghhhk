@@ -12,7 +12,13 @@ template = env.get_template('standard.html')
 @app.errorhandler(404)
 def page_not_found(e):
 	template = env.get_template('404.html')
-	return template.render(''), 404
+	conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
+	cur = conn.cursor()
+	cur.execute('select id from cards order by random() limit 1')
+	r = cur.fetchone()
+	cur.close()
+	conn.close()
+	return template.render(card_id=r[0]), 404
 
 def get_a_deck(deck_id):
 	conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
@@ -69,7 +75,13 @@ def card(card_id):
 
 	if r == None:
 		template = env.get_template('404.html')
-		return template.render(''), 404
+		conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
+		cur = conn.cursor()
+		cur.execute('select id from cards order by random() limit 1')
+		r = cur.fetchone()
+		cur.close()
+		conn.close()
+		return template.render(card_id=r[0]), 404
 	else:
 		template = env.get_template('card.html')
 		return template.render(name=r[0], card_id=card_id)

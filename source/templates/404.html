@@ -1,5 +1,10 @@
 {% extends "standard.html" %}
 {% block body %}
-<h1>404</h1>
-<h3>Page not found; sorry pal.</h3>
+<div class="jumbotron text-center">
+  <h1>ERROR 404!</h1>
+  <p>We couldn't find the page you were looking for...</p>
+  <img src="/static/images/c{{ card_id }}.gif" />
+  <br />
+  <p>...but here's a random card! No hard feelings.</p>
+</div>
 {% endblock %}
