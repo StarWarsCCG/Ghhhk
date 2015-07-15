@@ -25,5 +25,7 @@ $(document).ready(function() {
             doSearch();
         }
     });
+    
+    $("#card-title-search").focus();
 });
 

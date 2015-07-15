@@ -1,13 +1,15 @@
-from flask import Flask, Response, json
-from flask import request
+from flask import Flask, Response, json, request
+from jinja2 import Environment, PackageLoader
 import psycopg2
 import json
 
 app = Flask(__name__)
+env = Environment(loader=PackageLoader(__name__, 'templates'))
 
 @app.route("/")
 def hello():
-	return "Hello World!"
+	template = env.get_template('test.html')
+	return template.render(stuff='Hello World!')
 
 @app.route('/card/<card>')
 def card(card):
