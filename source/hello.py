@@ -14,7 +14,7 @@ def hello():
 @app.route('/decks/new/dark')
 def dark_deck_builder():
 	template = env.get_template('deck_builder.html')
-	return template.render()
+	return template.render(user='LordBuzzSaw')
 
 @app.route('/test')
 def test_template():
