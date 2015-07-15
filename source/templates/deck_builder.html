@@ -6,50 +6,24 @@
 <h1>Deck Builder</h1>
 <h2>Dark Side</h2>
 
-<p>
-  <label for="deck-name">Deck Name</label>
-  <input id="deck-name" type="text">
-</p>
-
-<p>
-  <label for="deck-name">Deck Description</label>
-  <input id="deck-name" type="text">
-</p>
-
-<p>
-  <label for="deck-strategy"><abbr title="Describe how to play this deck well.">Deck Strategy</abbr></label><br>
-  <textarea id="deck-strategy"></textarea>
-</p>
-
-<p>
-  <label for="card-title-search">Card Title</label>
-  <input id="card-title-search" type="text">
-  <button id="card-title-search-button" type="button" class="btn btn-xs btn-default">Search</button>
-</p>
-
 <div class="row">
   <div class="col-md-6">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="card-search-results">
-        <tr>
-          <td>-</td>
-          <td>Card Title</td>
-          <td>
-            <button type="button" class="btn btn-xs btn-success">Starting Effect</button>
-            <button type="button" class="btn btn-xs btn-success">Reserve Deck</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="col-md-6">
+    <h3>Deck Details</h3>
+    <p>
+      <label for="deck-name">Deck Name</label>
+      <input id="deck-name" type="text">
+    </p>
+
+    <p>
+      <label for="deck-name">Deck Description</label>
+      <input id="deck-name" type="text">
+    </p>
+
+    <p>
+      <label for="deck-strategy"><abbr title="Describe how to play this deck well.">Deck Strategy</abbr></label><br>
+      <textarea id="deck-strategy"></textarea>
+    </p>
+
     <table class="table">
       <thead>
         <tr>
@@ -67,6 +41,33 @@
           <td>3</td>
           <td>1</td>
           <td><button type="button" class="btn btn-xs btn-danger">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <h3>Card Search</h3>
+    <p>
+      <label for="card-title-search">Card Title</label>
+      <input id="card-title-search" type="text">
+      <button id="card-title-search-button" type="button" class="btn btn-xs btn-default">Search</button>
+    </p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="card-search-results">
+        <tr>
+          <td>-</td>
+          <td>Card Title</td>
+          <td>
+            <button type="button" class="btn btn-xs btn-success">Starting Effect</button>
+            <button type="button" class="btn btn-xs btn-success">Reserve Deck</button>
+          </td>
         </tr>
       </tbody>
     </table>
