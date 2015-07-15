@@ -29,42 +29,57 @@ def card(card):
 
 @app.route('/api/cards/search')
 def search_by_title():
-	param = request.args.get('title')
+	args = request.args
 	# if param == None or param == '':
-	if param == None:
-		return Response(json.dumps({}),  mimetype='application/json')
-	search_string = '%' + param + '%'
 	conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
 	cur = conn.cursor()
 
-	query = 'select id, card_name from cards where card_name ILIKE (%s)'
-	param = (search_string,)
+	query = 'select id, card_name from cards'
+	param = ()
+	conditions = []
+
+	print('initial query: {}'.format(query))
+
+	title = request.args.get('title')
+	if title is not None:
+		title = '%' + title + '%'
+		conditions.append('card_name ILIKE (%s)')
+		param += (title,)
 
 	cardtype = request.args.get('cardtype')
 	if cardtype is not None:
 		cardtype = '%' + cardtype + '%'
-		query += ' and card_type ILIKE (%s)'
+		conditions.append('card_type ILIKE (%s)')
 		param += (cardtype,)
 
 	matching_weapon = request.args.get('match')
 	if matching_weapon is not None:
 		if matching_weapon == 'yes':
-			query += ' and matching_weapon IS NOT NULL'
+			conditions.append('matching_weapon IS NOT NULL')
 		elif matching_weapon == 'no':
-			query += ' and matching_weapon IS NULL'
+			conditions.append('matching_weapon IS NULL')
 		else:
 			pass
 
 	grouping = request.args.get('grouping')
 	if grouping is not None:
 		if grouping == 'light':
-			query += ' and grouping = (%s)'
+			conditions.append('grouping = (%s)')
 			param += ("Light",)
 		elif grouping == 'dark':
-			query += ' and grouping = (%s)'
+			conditions.append('grouping = (%s)')
 			param += ("Dark",)
 		else:
 			pass
+
+	if not args == []:
+		# build that query!
+		query += ' where {}'.format(conditions[0])
+		if len(conditions) > 1:
+			for i in range(1,len(conditions)):
+				query += ' and {}'.format(conditions[i])
+	else:
+		return Response(json.dumps({}),  mimetype='application/json')
 
 	limit = request.args.get('limit')
 	if limit is not None:
@@ -73,8 +88,10 @@ def search_by_title():
 		except ValueError:
 			pass
 		else:
-			query += ' limit (%s)'
+			query += 'limit (%s)'
 			param += (limit,)
+
+	print('final query: {}'.format(query))
 
 	cur.execute(query, param)
 	r = cur.fetchall()
