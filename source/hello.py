@@ -11,6 +11,16 @@ def hello():
 	template = env.get_template('standard.html')
 	return template.render(stuff='Hello World!')
 
+@app.route('/decks/new/dark')
+def dark_deck_builder():
+	template = env.get_template('deck_builder.html')
+	return template.render()
+
+@app.route('/test')
+def test_template():
+	template = env.get_template('test.html')
+	return template.render()
+
 @app.route('/card/<card>')
 def card(card):
 	try:

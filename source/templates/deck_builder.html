@@ -1,0 +1,62 @@
+{% extends "standard.html" %}
+{% block head_css %}
+<link href="/static/deck_builder.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<h1>Deck Builder</h1>
+<h2>Dark Side</h2>
+<p>
+  <label for="card-title-search">Card Title</label>
+  <input id="card-title-search" type="text">
+  <button id="card-title-search-button" type="button" class="btn btn-xs btn-default">Search</button>
+</p>
+
+<div class="row">
+  <div class="col-md-6">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="card-search-results">
+        <tr>
+          <td>-</td>
+          <td>Card Title</td>
+          <td>
+            <button type="button" class="btn btn-xs btn-success">Starting Effect</button>
+            <button type="button" class="btn btn-xs btn-success">Reserve Deck</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Deck Count</th>
+          <th><abbr title="Placed under Starting Effect">Start Count</span></th>
+          <th>Removal</th>
+        </tr>
+      </thead>
+      <tbody id="asdf">
+        <tr>
+          <td>-</td>
+          <td>Card Title</td>
+          <td>3</td>
+          <td>1</td>
+          <td><button type="button" class="btn btn-xs btn-danger">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+{% block body_js %}
+<script src="/static/js/deck_builder.js"></script>
+{% endblock %}

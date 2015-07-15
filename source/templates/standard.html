@@ -4,6 +4,7 @@
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="/static/css/dejarix.css" rel="stylesheet">
+    {% block head_css %}{% endblock %}
     
     <title>DEJARIX</title>
   </head>
@@ -27,16 +28,29 @@
                 <li><a href="/decks/new/light">Light Side</a></li>
               </ul>
             </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/static/download/dejarix-win32.zip">Windows 7+ (32-bit)</a></li>
+                <li><a href="/static/download/dejarix-osx.zip">OSX 10.9+</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Linux</li>
+                <li><a href="/static/download/dejarix32.deb">Ubuntu/Debian (32-bit)</a></li>
+                <li><a href="/static/download/dejarix64.deb">Ubuntu/Debian (64-bit)</a></li>
+                <li><a href="/static/download/dejarix64.tar.gz">Arch Linux (64-bit)</a></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
     
     <div class="container" role="main">
-        <p>{{ stuff }}</p>
+        <p>{{ stuff }}{% block body %}{% endblock %}</p>
     </div>
     
     <script src="/static/js/jquery-2.1.4.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
+    {% block body_js %}{% endblock %}
   </body>
 </html>
