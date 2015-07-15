@@ -1,4 +1,4 @@
-from flask import Flask, Response, json, request
+from flask import Flask, Response, json, request, make_response, redirect, render_template
 from jinja2 import Environment, PackageLoader
 import psycopg2
 import json
@@ -108,6 +108,22 @@ def search_by_title():
 	
 	#set content-type to application/json, rather than text/html
 	return Response(output,  mimetype='application/json')
+
+@app.route('/snickerdoodle/set')
+def set_snickerdoodle():
+	resp = make_response(redirect('/snickerdoodle/get'))
+	resp.set_cookie('username',value='success')
+
+	return resp
+
+@app.route('/snickerdoodle/get')
+def get_snickerdoodle():
+	username = request.cookies.get('username')
+	if username is None:
+		return '<h4>Something is broken.</h4>'
+	else:
+		return '<h4>It works!<h4>'
+
 
 if __name__ == "__main__":
 	app.run(debug=True)
