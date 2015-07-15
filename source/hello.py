@@ -37,7 +37,7 @@ def get_a_deck(deck_id):
 
 @app.route("/")
 def hello():
-	return template.render(stuff='Hello World!')
+	return template.render()
 
 @app.route('/decks/new/dark')
 def dark_deck_builder():
