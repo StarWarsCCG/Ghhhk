@@ -127,7 +127,7 @@ def get_snickerdoodle():
 	if snicker is None:
 		return '<h4>Something is broken.</h4>'
 	else:
-		return 'This snickerdoodle\'s snicker is {}'.format(snicker)
+		return 'This doodle\'s snicker is {}'.format(snicker)
 
 
 if __name__ == "__main__":
