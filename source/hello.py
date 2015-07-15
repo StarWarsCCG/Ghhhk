@@ -9,6 +9,11 @@ env = Environment(loader=PackageLoader(__name__, 'templates'))
 
 template = env.get_template('standard.html')
 
+@app.errorhandler(404)
+def page_not_found(e):
+	template = env.get_template('404.html')
+	return template.render(''), 404
+
 def get_a_deck(deck_id):
 	conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
 	cur = conn.cursor()
