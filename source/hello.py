@@ -113,16 +113,21 @@ def search_by_title():
 def set_snickerdoodle():
 	resp = make_response(redirect('/snickerdoodle/get'))
 	resp.set_cookie('username',value='success')
+	return resp
 
+@app.route('/snickerdoodle/set/<snicker>')
+def set_snickerdoodle_custom(snicker):
+	resp = make_response(redirect('/snickerdoodle/get'))
+	resp.set_cookie('snicker',value=snicker)
 	return resp
 
 @app.route('/snickerdoodle/get')
 def get_snickerdoodle():
-	username = request.cookies.get('username')
-	if username is None:
+	snicker = request.cookies.get('snicker')
+	if snicker is None:
 		return '<h4>Something is broken.</h4>'
 	else:
-		return '<h4>It works!<h4>'
+		return 'This snickerdoodle\'s snicker is {}'.format(snicker)
 
 
 if __name__ == "__main__":
