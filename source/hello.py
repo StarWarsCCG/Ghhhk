@@ -81,24 +81,29 @@ def deck(deck_id):
 		else:
 			deck = get_a_deck(deck_id)
 
-
-			html =  'Deck ID: {}'.format(deck["id"]) + '<br />'
-			html += 'Deck Name: {}'.format(deck["name"]) + '<br />'
-			html += 'Created: {}'.format(deck["date_created"].strftime('%B %-d, %Y @ %H:%M')) + '<br />'
 			if deck["is_light_side"] is True:
-				html += 'Side: Light <br />'
+				grouping = 'Light'
 			else:
-				html += 'Side: Dark <br />'
-			html += 'Description: {}'.format(deck["description"]) + '<br />'
-			html += 'Last Modified: {}'.format(deck["date_modified"].strftime('%B %-d, %Y @ %H:%M')) + '<br />'
-			html += 'Strategy: {}'.format(deck["strategy"]) + '<br />'
-			html += 'Player ID: {}'.format(deck["player_id"]) + '<br />'
-			if deck["is_public"] is True:
-				html += 'Deck Status: Public <br />'
-			else:
-				html += 'Deck Status: Private <br />'
+				grouping = 'Dark'
 
-			return template.render(stuff=html)
+			if deck["is_public"] is True:
+				privacy = 'Public'
+			else:
+				privacy = 'Private'
+
+			template = env.get_template('deck.html')
+			return template.render(
+				deck_id=deck["id"]
+				,name=deck["name"]
+				,created=deck["date_created"].strftime('%B %-d, %Y @ %H:%M')
+				,grouping=grouping
+				,description=deck["description"]
+				,modified=deck["date_modified"].strftime('%B %-d, %Y @ %H:%M')
+				,player_id=deck["player_id"]
+				,privacy=privacy
+				,strategy=deck["strategy"]
+			)
+
 
 
 @app.route('/api/deck')

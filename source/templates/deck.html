@@ -1,0 +1,49 @@
+{% extends "standard.html" %}
+{% block body %}
+<div class="row">
+  <div class="col-md-6">
+  	<table>
+  		<tbody>
+  			<tr>
+  				<td width="55%">Deck ID</td>
+  				<td>{{ deck_id }}
+  			</tr>
+  			<tr>
+  				<td width="55%">Deck Name</td>
+  				<td>{{ name }}</td>
+  			</tr>
+  			<tr>
+  				<td width="55%">Date Created</td>
+  				<td>{{ created }}</td>
+  			</tr>
+  			<tr>
+  				<td width="55%">Grouping</td>
+  				<td>{{ grouping }}</td>
+  			</tr>
+  			<tr>
+  				<td width="55%">Description</td>
+  				<td>{{ description }}</td>
+  			</tr>
+  			<tr>
+  				<td width="55%">Last Modified</td>
+  				<td>{{ modified }}</td>
+  			</tr>
+  			<tr>
+  				<td width="55%">Player ID</td>
+  				<td>{{ player_id }}</td>
+  			</tr>
+  			<tr>
+  				<td width="55%">Deck Status</td>
+  				<td>{{ privacy }}</td>
+  			</tr>
+  		</tbody>
+  	</table>
+  	<br />
+  	<div class="list-group">
+  		<h4 class="list-group-item-heading">Strategy</h4>
+  		<p class="list-group-item-text">{{ strategy }}</p>
+  	</div>
+  <div>
+</div>
+
+{% endblock %}
