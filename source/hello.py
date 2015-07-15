@@ -42,12 +42,12 @@ def hello():
 @app.route('/decks/new/dark')
 def dark_deck_builder():
 	template = env.get_template('deck_builder.html')
-	return template.render(user='LordBuzzSaw')
+	return template.render()
 
 @app.route('/test')
 def test_template():
 	template = env.get_template('test.html')
-	return template.render()
+	return template.render(user='LordBuzzSaw')
 
 @app.route('/card/<card>')
 def card(card):

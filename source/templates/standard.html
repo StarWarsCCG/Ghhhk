@@ -17,17 +17,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="/cards">Cards</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Decks <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/decks">Browse Public Decks</a></li>
-                <li><a href="/decks/mine">View My Decks</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Create New Deck</li>
-                <li><a href="/decks/new/dark">Dark Side</a></li>
-                <li><a href="/decks/new/light">Light Side</a></li>
-              </ul>
-            </li>
+            <li><a href="/decks">Decks</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Download <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -40,10 +30,22 @@
                 <li><a href="/static/download/dejarix64.tar.gz">Arch Linux (64-bit)</a></li>
               </ul>
             </li>
+            <li><a href="/test">Test</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
 {% if user %}
-            <li><a href="/signout">Sign Out ({{user}})</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/decks/mine">View My Decks</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Create New Deck</li>
+                <li><a href="/decks/new/dark">Dark Side</a></li>
+                <li><a href="/decks/new/light">Light Side</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/signout">Sign Out</a></li>
+              </ul>
+            </li>
 {% else %}
             <li><a href="/signin">Sign In</a></li>
 {% endif %}
