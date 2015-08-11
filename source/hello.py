@@ -1,13 +1,22 @@
 from flask import Flask, Response, json, request, make_response, redirect, render_template
+from flask.ext.login import LoginManager
 from jinja2 import Environment, PackageLoader
 import psycopg2
 import datetime
 import json
+from wtforms import Form, BooleanField, TextField, validators
 
+
+# Initialize app, login manager, and default template
 app = Flask(__name__)
 env = Environment(loader=PackageLoader(__name__, 'templates'))
-
 template = env.get_template('standard.html')
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.get(userid)
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -19,6 +28,26 @@ def page_not_found(e):
 	cur.close()
 	conn.close()
 	return template.render(card_id=r[0]), 404
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    # Here we use a class of some kind to represent and validate our
+    # client-side form data. For example, WTForms is a library that will
+    # handle this for us.
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Login and validate the user.
+        dlm.login_user(user)
+
+        flask.flash('Logged in successfully.')
+
+        next = flask.request.args.get('next')
+        if not next_is_valid(next):
+            return flask.abort(400)
+
+        return flask.redirect(next or flask.url_for('index'))
+    return flask.render_template('login.html', form=form)
+
 
 def get_a_deck(deck_id):
 	conn = psycopg2.connect('host=localhost dbname=swccg user=postgres password=guest')
